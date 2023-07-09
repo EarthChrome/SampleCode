@@ -79,7 +79,7 @@
 
             sampler2D _MainTex;
             fixed4 _Color;
-            fixed4 _TextureSampleAdd;
+            fixed4 _TextureSampleOffset;
             float4 _ClipRect;
             float4 _MainTex_ST;
             half _SpeedX;
@@ -103,7 +103,7 @@
             fixed4 frag(v2f IN) : SV_Target
             {
                 float2 offset = frac(_Time.y * float2(_SpeedX, _SpeedY));
-                half4 color = _ColorBoost*(tex2D(_MainTex,IN.texcoord+offset) + _TextureSampleAdd) * IN.color;
+                half4 color = _ColorBoost*(tex2D(_MainTex,IN.texcoord+offset) + _TextureSampleOffset) * IN.color;
 
                 #ifdef UNITY_UI_CLIP_RECT
                 color.a *= UnityGet2DClipping(IN.worldPosition.xy, _ClipRect);
