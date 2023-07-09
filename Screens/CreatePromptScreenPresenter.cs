@@ -113,6 +113,7 @@ namespace AppElements.Screens.CreatePromptScreen {
             ResetScreen();
             _eventManager.SendCreatePromptDisplayed(origin);
         }
+        
         public void OnCreateResultButtonClicked() {
             if (_mlConsumableManager.Count > 0) {
                 _view.DisplayResults();
@@ -168,6 +169,7 @@ namespace AppElements.Screens.CreatePromptScreen {
             _view.SetInputContent(_surpriseMeStrings[Random.Range(0, _surpriseMeStrings.Length)]);
             _currentPromptIsSurprise = true;
         }
+        
         public void OnBookmarkResult(Drawing drawing, bool bookmark) {
             if (bookmark) {
                 _bookmarkManager.SetBookmarked(drawing.Id, EventEnums.BookmarkOrigin.CreatePrompt);
@@ -179,6 +181,7 @@ namespace AppElements.Screens.CreatePromptScreen {
                 _bookmarkManager.RemoveBookmark(drawing.Id, EventEnums.BookmarkOrigin.CreatePrompt);
             }
         }
+        
         public void OnPlayResult(Drawing drawing) {
             // Drawing could have already been saved from a bookmark for ex.
             if (_mlDrawingSaveManager.TryGetMLDrawing(drawing.Id, out Drawing _) is false) {
@@ -201,6 +204,7 @@ namespace AppElements.Screens.CreatePromptScreen {
             _panelManager.ShowDrawingPreview(drawing, EventEnums.DrawingPreviewOrigin.CreatePrompt,
                 () => _screenRouter.CreatePromptToIngame(drawing));
         }
+        
         public void CheckButtonCreateState(string prompt) {
             _currentPromptIsSurprise = false;
             _view.SetCreateButtonState(prompt.Length > 0);
