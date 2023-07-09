@@ -199,7 +199,6 @@ namespace AppElements.Screens.CreatePromptScreen {
             _surpriseMeInputButtonCanvasGroup.alpha = 0f;
         }
 
-        
         public void SetInputContent(string content) {
             _inputField.text = content;
         }
@@ -237,11 +236,7 @@ namespace AppElements.Screens.CreatePromptScreen {
             DOTween.Kill(RESULTS_OVERLAY_ALPHA_ID);
             _resultOverlayGroup.DOFade(alpha, 0.2f).SetId(RESULTS_OVERLAY_ALPHA_ID);
         }
-
         
-
-        
-
         private void OnDrawingsGenerated(List<Drawing> drawings) {
             SetCreateResultButtonInteractable(true);
             SetSurpriseMeButtonInteractable(true);
@@ -256,9 +251,7 @@ namespace AppElements.Screens.CreatePromptScreen {
         private void BookmarkResult(Drawing drawing, bool bookmark) {
             _presenter.OnBookmarkResult(drawing, bookmark);
         }
-
         
-
         public void SetCreateButtonState(bool interactable) {
             SetCreateResultButtonInteractable(interactable);
         }
@@ -271,7 +264,6 @@ namespace AppElements.Screens.CreatePromptScreen {
             _presenter.OnCloseButtonClicked();
             return true;
         }
-
         
         private void SetSurpriseMeButtonInteractable(bool interactable) {
             _surpriseMeInputButton.interactable = interactable;
