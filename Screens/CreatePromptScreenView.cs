@@ -66,7 +66,7 @@ namespace AppElements.Screens.CreatePromptScreen {
         private const string DISPLAY_ID = "display_id";
 
         public override ScreenId GetId() => ScreenId.CreatePrompt;
-
+        
         public override void Initialize(Camera cam) {
             base.Initialize(cam);
             DeviceManager deviceManager = ApplicationGraph.DeviceManager;
@@ -129,6 +129,11 @@ namespace AppElements.Screens.CreatePromptScreen {
             _presenter.OnDisplay(createPromptNavArgs.Origin);
         }
         
+        public override bool OnBackPressed() {
+            _presenter.OnCloseButtonClicked();
+            return true;
+        }
+        
         protected override void AppendCustomIn(Sequence sequence, float duration) {
             _canvasGroupRT.anchoredPosition = new Vector2(0f, -2000f);
             sequence.Append(_canvasGroupRT.DOAnchorPosY(0f, duration).SetEase(Ease.OutBack, 1f));
@@ -137,8 +142,12 @@ namespace AppElements.Screens.CreatePromptScreen {
         protected override void AppendCustomOut(Sequence sequence, float duration) {
             sequence.Append(_canvasGroupRT.DOAnchorPosY(-2000f, duration).SetEase(Ease.InCubic));
         }
-
+        
         protected override void SendDisplayedEvent() {}
+        
+        public RectTransform GetHintAnchor() {
+            return _hintAnchor;
+        }
         
         public void ResetScreen() {
             DOTween.Kill(BUTTON_POSITION_ID);
@@ -213,12 +222,7 @@ namespace AppElements.Screens.CreatePromptScreen {
             _createResultButtonRectTransform.DOAnchorPosY(position / _canvas.scaleFactor, 0.35f, true)
                 .SetId(BUTTON_POSITION_ID).SetEase(Ease.OutBack);
         }
-
-        public void SetInputFieldPosition(float position) {
-            _inputFieldConstraint.constraintActive = false;
-            _inputFieldRectTransform.DOAnchorPosY(position, 0.2f);
-        }
-
+        
         public void SetInputFieldSize(float size) {
             DOTween.Kill(INPUT_FIELD_SIZE_ID);
             Vector2 currentDelta = _inputFieldRectTransform.sizeDelta;
@@ -237,6 +241,10 @@ namespace AppElements.Screens.CreatePromptScreen {
             _resultOverlayGroup.DOFade(alpha, 0.2f).SetId(RESULTS_OVERLAY_ALPHA_ID);
         }
         
+        public void SetCreateButtonState(bool interactable) {
+            SetCreateResultButtonInteractable(interactable);
+        }
+        
         private void OnDrawingsGenerated(List<Drawing> drawings) {
             SetCreateResultButtonInteractable(true);
             SetSurpriseMeButtonInteractable(true);
@@ -252,19 +260,6 @@ namespace AppElements.Screens.CreatePromptScreen {
             _presenter.OnBookmarkResult(drawing, bookmark);
         }
         
-        public void SetCreateButtonState(bool interactable) {
-            SetCreateResultButtonInteractable(interactable);
-        }
-
-        public RectTransform GetHintAnchor() {
-            return _hintAnchor;
-        }
-
-        public override bool OnBackPressed() {
-            _presenter.OnCloseButtonClicked();
-            return true;
-        }
-        
         private void SetSurpriseMeButtonInteractable(bool interactable) {
             _surpriseMeInputButton.interactable = interactable;
             _surpriseMeButtonOverlay.SetActive(interactable is false);
@@ -274,6 +269,12 @@ namespace AppElements.Screens.CreatePromptScreen {
             _createResultButton.interactable = interactable;
             _createResultButtonOverlay.SetActive(interactable is false);
         }
+        
+        private void SetInputFieldPosition(float position) {
+            _inputFieldConstraint.constraintActive = false;
+            _inputFieldRectTransform.DOAnchorPosY(position, 0.2f);
+        }
+        
     }
 
 }
