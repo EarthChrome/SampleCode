@@ -6,5 +6,5 @@ This simple UI shader will scroll a texture
 
 # Shader Graph
 
-![](https://github.com/EarthChrome/SampleCode/blob/main/ReadMeResources/PchiitGraph.gif)
+![](https://github.com/EarthChrome/SampleCode/blob/main/ReadMeResources/PchiitGraph.png)
 ![](https://github.com/EarthChrome/SampleCode/blob/main/ReadMeResources/Pchiit.gif)
